@@ -6,7 +6,7 @@ import { usePathname } from 'next/navigation';
 import { cn } from '@/lib/utils';
 import {
   BarChart3, Briefcase, AlertTriangle, ArrowLeftRight,
-  Settings, Target, Wallet, CalendarCheck, FileText, Menu, X,
+  Settings, Target, Wallet, CalendarCheck, FileText, Menu, X, BookOpen,
 } from 'lucide-react';
 
 const NAV_ITEMS = [
@@ -18,6 +18,7 @@ const NAV_ITEMS = [
   { href: '/dca', label: '定投', icon: CalendarCheck },
   { href: '/pools', label: '资金池', icon: AlertTriangle },
   { href: '/review', label: '复盘', icon: FileText },
+  { href: '/guide', label: '指南', icon: BookOpen },
   { href: '/settings', label: '设置', icon: Settings },
 ];
 
