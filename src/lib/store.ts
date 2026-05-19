@@ -23,6 +23,7 @@ import {
 
 interface AppActions {
   loadFromStorage: () => void;
+  loadFromStorageAsync: () => Promise<void>;
   initializeData: () => void;
   resetAll: () => void;
 
@@ -104,6 +105,19 @@ export const useStore = create<Store>((set, get) => ({
 
   loadFromStorage: () => {
     const saved = storage.load();
+    if (saved) {
+      set({
+        ...saved,
+        poolTransfers: saved.poolTransfers ?? [],
+        dcaExecutions: saved.dcaExecutions ?? [],
+        reviews: saved.reviews ?? [],
+        netWorthHistory: saved.netWorthHistory ?? [],
+      });
+    }
+  },
+
+  loadFromStorageAsync: async () => {
+    const saved = await storage.loadAsync();
     if (saved) {
       set({
         ...saved,

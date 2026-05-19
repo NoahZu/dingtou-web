@@ -1,10 +1,28 @@
 {
-  "name": "dingtou-investment",
-  "compatibility_date": "2026-05-01",
-  "compatibility_flags": ["nodejs_compat"],
-  "main": ".open-next/worker.js",
-  "assets": {
-    "directory": ".open-next/assets",
-    "binding": "ASSETS"
-  }
+	"name": "dingtou-investment",
+	"compatibility_date": "2026-05-01",
+	"compatibility_flags": [
+		"nodejs_compat"
+	],
+	"main": ".open-next/worker.js",
+	"assets": {
+		"directory": ".open-next/assets",
+		"binding": "ASSETS"
+	},
+	"d1_databases": [
+		{
+			"binding": "DB",
+			"database_name": "dingtou-db",
+			"database_id": "12c78390-efa4-42f9-9f0f-d101a0112aab"
+		},
+		{
+			"binding": "dingtou_db",
+			"database_name": "dingtou-db",
+			"database_id": "12c78390-efa4-42f9-9f0f-d101a0112aab",
+			"remote": true
+		}
+	],
+	"vars": {
+		"JWT_SECRET": "change-this-to-a-random-secret-in-production"
+	}
 }

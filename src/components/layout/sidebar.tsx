@@ -2,11 +2,12 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
-import { usePathname } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import { cn } from '@/lib/utils';
+import { getUsername, clearAuth } from '@/lib/storage';
 import {
   BarChart3, Briefcase, AlertTriangle, ArrowLeftRight,
-  Settings, Target, Wallet, CalendarCheck, FileText, Menu, X, BookOpen,
+  Settings, Target, Wallet, CalendarCheck, FileText, Menu, X, BookOpen, LogOut, User,
 } from 'lucide-react';
 
 const NAV_ITEMS = [
@@ -27,7 +28,14 @@ const BOTTOM_NAV = NAV_ITEMS.slice(0, 5);
 
 export function Sidebar() {
   const pathname = usePathname();
+  const router = useRouter();
   const [drawerOpen, setDrawerOpen] = useState(false);
+  const username = getUsername();
+
+  function handleLogout() {
+    clearAuth();
+    router.push('/login');
+  }
 
   return (
     <>
@@ -57,8 +65,22 @@ export function Sidebar() {
             );
           })}
         </nav>
-        <div className="border-t p-3 text-xs text-muted-foreground">
-          v1.1 · 本地运行
+        <div className="border-t p-3">
+          {username && (
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-1.5 text-xs text-muted-foreground">
+                <User className="h-3.5 w-3.5" />
+                <span className="truncate max-w-[100px]">{username}</span>
+              </div>
+              <button
+                onClick={handleLogout}
+                className="rounded p-1 text-muted-foreground hover:bg-accent hover:text-accent-foreground"
+                title="退出登录"
+              >
+                <LogOut className="h-3.5 w-3.5" />
+              </button>
+            </div>
+          )}
         </div>
       </aside>
 
@@ -108,6 +130,20 @@ export function Sidebar() {
                 );
               })}
             </nav>
+            {username && (
+              <div className="border-t mx-2 mt-2 pt-3 flex items-center justify-between px-3">
+                <div className="flex items-center gap-1.5 text-xs text-muted-foreground">
+                  <User className="h-3.5 w-3.5" />
+                  <span className="truncate max-w-[120px]">{username}</span>
+                </div>
+                <button
+                  onClick={() => { setDrawerOpen(false); handleLogout(); }}
+                  className="rounded p-1 text-muted-foreground hover:bg-accent hover:text-accent-foreground"
+                >
+                  <LogOut className="h-3.5 w-3.5" />
+                </button>
+              </div>
+            )}
           </div>
         </div>
       )}

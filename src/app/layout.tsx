@@ -1,8 +1,7 @@
 import type { Metadata, Viewport } from 'next';
 import localFont from 'next/font/local';
-import { Sidebar } from '@/components/layout/sidebar';
-import { StoreInitializer } from '@/components/layout/store-initializer';
-import { NotificationManager } from '@/components/layout/notification-manager';
+import { AuthGuard } from '@/components/layout/auth-guard';
+import { AppShell } from '@/components/layout/app-shell';
 import { Toaster } from '@/components/ui/sonner';
 import { TooltipProvider } from '@/components/ui/tooltip';
 import './globals.css';
@@ -34,15 +33,9 @@ export default function RootLayout({
     <html lang="zh-CN" className={`font-sans ${geistSans.variable}`}>
       <body className="antialiased">
         <TooltipProvider>
-          <StoreInitializer />
-          <NotificationManager />
-          <Sidebar />
-          {/* pt-12 为移动端顶栏留空，pb-16 为移动端底栏留空 */}
-          <main className="min-h-screen bg-background pt-12 pb-16 md:ml-56 md:pt-0 md:pb-0">
-            <div className="mx-auto max-w-6xl px-4 py-4 md:px-6 md:py-6">
-              {children}
-            </div>
-          </main>
+          <AuthGuard>
+            <AppShell>{children}</AppShell>
+          </AuthGuard>
           <Toaster />
         </TooltipProvider>
       </body>
